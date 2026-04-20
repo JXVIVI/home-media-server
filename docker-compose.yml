@@ -1,5 +1,4 @@
 services:
-  # VPN Gateway
   gluetun:
     image: qmcgaw/gluetun
     container_name: vpn
@@ -7,43 +6,43 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
+    env_file:
+      - .env
     environment:
       - VPN_SERVICE_PROVIDER=protonvpn
       - VPN_TYPE=wireguard
-      - WIREGUARD_PRIVATE_KEY=${PROTON_PRIVATE_KEY}
-      - SERVER_COUNTRIES=Netherlands # Change to your preference
+      - VPN_PORT_FORWARDING=on # Enables better speeds if you have a paid account
     ports:
       - 8080:8080 # qBittorrent Web UI
     restart: unless-stopped
 
-  # Torrent Client
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
-    network_mode: "service:gluetun" # Use the VPN's network
+    network_mode: "service:gluetun"
+    env_file:
+      - .env
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
       - WEBUI_PORT=8080
     volumes:
       - ./qbittorrent-config:/config
       - ${HDD_MOUNT}/downloads:/downloads
     depends_on:
-      - gluetun
+      gluetun:
+        condition: service_healthy
     restart: unless-stopped
 
-  # Media Server
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
-    # network_mode host is best for DLNA and local discovery
     network_mode: host
+    env_file:
+      - .env
     user: ${PUID}:${PGID}
     volumes:
       - ./jellyfin-data/config:/config
       - ./jellyfin-data/cache:/cache
-      - ${HDD_MOUNT}/movies:/data/movies:ro # Mounts your HDD movies as read-only
+      - ${HDD_MOUNT}/movies:/data/movies:ro
     devices:
-      - /dev/dri/renderD128:/dev/dri/renderD128 # Intel QuickSync (Haswell support)
+      - /dev/dri/renderD128:/dev/dri/renderD128
     restart: unless-stopped
