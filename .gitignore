@@ -1,0 +1,5 @@
+.env
+jellyfin-data/
+qbittorrent-config/
+rclone-config/
+*.log
