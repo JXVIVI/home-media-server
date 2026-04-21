@@ -1,7 +1,7 @@
-= Home Streaming Server
+# Home Streaming Server
 A repo for a home streaming server
 
-== Quick Notes
+## Quick Notes
 - qBittorrent for torrenting
 - Jellyfin for the streaming server
 - Uses protonvpn for torrenting
