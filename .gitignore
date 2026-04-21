@@ -1,4 +1,5 @@
 .env
+.proton-vpn.env
 jellyfin-data/
 qbittorrent-config/
 rclone-config/
