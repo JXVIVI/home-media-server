@@ -15,3 +15,5 @@ A repo for a home streaming server
 - Important: For Jellyfin to properly recognise media and get correct metadata - tv shows and movies should be in *SEPARATE* Jellyfin libraries
     - Ie you should have a tv and movies directory within /mnt/media-storage/media
     - And media should go in their corresponding directory
+- Note: you should rename example.env to .env and add the private key for wireguard (protonvpn)
+    - For the private wireguard key, you can find it in vaultwarden or you can generate another on the protonvpn site
