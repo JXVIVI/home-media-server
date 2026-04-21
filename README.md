@@ -1,6 +1,15 @@
 # Home Streaming Server
 A repo for a home streaming server
 
+## Requirements
+- A linux machine 
+	- MacOS might work too (not tested and you should probably just use linux anyway)
+- A place to store media that you can mount to the server's fs
+	- An external drive, nas or just the servers drive will work
+	- Assumes mounting to /mnt/media-storage - you can change this in docker-compose.yml or symlink it to anothe location if you wish
+- docker
+- avahi-daemon
+
 ## Quick Notes
 - qBittorrent for torrenting
 - Jellyfin for the streaming server
